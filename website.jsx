@@ -17,7 +17,7 @@ const artworks = [
     year: "2025",
     medium: "Digital illustration",
     category: "Digital",
-    image: "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/Chroma%20Crumble.webp",
     description: "A moody digital piece exploring memory, movement, and fragments of light."
   },
   {
@@ -25,7 +25,7 @@ const artworks = [
     year: "2025",
     medium: "Mixed media",
     category: "Mixed Media",
-    image: "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/Eden%20Collapse.webp",
     description: "Texture-heavy composition inspired by stillness, domestic space, and silence."
   },
   {
@@ -33,7 +33,7 @@ const artworks = [
     year: "2024",
     medium: "Oil pastel",
     category: "Drawing",
-    image: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/arcadian_shift%20copy.webp",
     description: "Warm tones and loose marks capture the feeling of late afternoon light."
   },
   {
@@ -41,7 +41,7 @@ const artworks = [
     year: "2024",
     medium: "Ink and wash",
     category: "Drawing",
-    image: "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/carousel.webp",
     description: "A minimal figurative work balancing negative space with expressive line."
   },
   {
@@ -49,7 +49,7 @@ const artworks = [
     year: "2023",
     medium: "Digital collage",
     category: "Digital",
-    image: "https://images.unsplash.com/photo-1578926288207-a90a5366759d?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/paradise.webp",
     description: "Layered collage using bold shapes, visual noise, and dreamlike color."
   }
 ];
@@ -254,7 +254,7 @@ export default function ArtworkPortfolio() {
           >
             <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-amber-300/30 via-pink-500/20 to-blue-500/20 blur-2xl" />
             <img
-              src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=1200&q=80"
+              src="/images/utopia.webp"
               alt="Featured artwork"
               className="relative aspect-[4/5] w-full rounded-[2rem] object-cover shadow-2xl"
             />
