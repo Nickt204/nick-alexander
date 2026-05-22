@@ -9,7 +9,7 @@ const artworks = [
     year: "2026",
     medium: "Acrylic on canvas",
     category: "Painting",
-    image: "/images/stairway-to-tomorrow.jpg",
+    image: "/images/stairway-to-day-break.webp",
     description: "A layered abstract composition exploring sunset light, movement, memory, and the lingering feeling of staying awake until sunrise."
   },
   {
@@ -17,7 +17,7 @@ const artworks = [
     year: "2025",
     medium: "Digital illustration",
     category: "Digital",
-    image: "/images/Chroma%20Crumble.webp",
+    image: "/images/chroma-crumble.webp",
     description: "A moody digital piece exploring memory, movement, and fragments of light."
   },
   {
@@ -25,7 +25,7 @@ const artworks = [
     year: "2025",
     medium: "Mixed media",
     category: "Mixed Media",
-    image: "/images/Eden%20Collapse.webp",
+    image: "/images/eden-collapse.webp",
     description: "Texture-heavy composition inspired by stillness, domestic space, and silence."
   },
   {
@@ -33,7 +33,7 @@ const artworks = [
     year: "2024",
     medium: "Oil pastel",
     category: "Drawing",
-    image: "/images/arcadian_shift%20copy.webp",
+    image: "/images/arcadian-shift.webp",
     description: "Warm tones and loose marks capture the feeling of late afternoon light."
   },
   {
