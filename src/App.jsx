@@ -44,7 +44,7 @@ function CardContent({ className = "", children, ...props }) {
 
 const artworks = [
   {
-    title: "Stairway to Tomorrow",
+    title: "Stairway to daybreak",
     year: "2026",
     medium: "Acrylic on canvas",
     category: "Painting",
@@ -53,7 +53,7 @@ const artworks = [
       "A layered abstract composition exploring sunset light, movement, memory, and the lingering feeling of staying awake until sunrise.",
   },
   {
-    title: "Signal Drift",
+    title: "Chroma Crumble",
     year: "2025",
     medium: "Digital illustration",
     category: "Digital",
@@ -61,7 +61,7 @@ const artworks = [
     description: "A moody digital piece exploring memory, movement, and fragments of light.",
   },
   {
-    title: "Quiet Room",
+    title: "Eden Collapse",
     year: "2025",
     medium: "Mixed media",
     category: "Mixed Media",
@@ -69,7 +69,7 @@ const artworks = [
     description: "Texture-heavy composition inspired by stillness, domestic space, and silence.",
   },
   {
-    title: "Gold Hour Study",
+    title: "Arcadian Shift",
     year: "2024",
     medium: "Oil pastel",
     category: "Drawing",
@@ -77,7 +77,7 @@ const artworks = [
     description: "Warm tones and loose marks capture the feeling of late afternoon light.",
   },
   {
-    title: "Blue Figure",
+    title: "Carousel",
     year: "2024",
     medium: "Ink and wash",
     category: "Drawing",
@@ -85,7 +85,7 @@ const artworks = [
     description: "A minimal figurative work balancing negative space with expressive line.",
   },
   {
-    title: "Afterimage",
+    title: "Paradise",
     year: "2023",
     medium: "Digital collage",
     category: "Digital",
