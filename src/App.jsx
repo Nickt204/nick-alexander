@@ -152,8 +152,7 @@ export default function App() {
       <section className="hero-section">
         <nav className="navbar">
           <div className="nav-brand">
-            <SparklesIcon className="h-4 w-4" />
-            Nick Alexander Studio
+            <img src="/images/na-logo-black.webp" alt="NA logo" className="nav-logo" />
           </div>
           <div className="nav-links">
             <a href="#work">Work</a>

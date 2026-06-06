@@ -36,11 +36,17 @@ a {
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 0.85rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #c4c4c4;
+}
+
+.nav-logo {
+  height: 200px;
+  width: auto;
+  display: block;
 }
 
 .nav-links {
