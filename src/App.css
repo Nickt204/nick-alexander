@@ -22,7 +22,7 @@ a {
 /* Hero Section */
 .hero-section {
   position: relative;
-  padding: 28px 20px;
+  padding: 28px 48px;
   background: #070707;
 }
 
@@ -184,7 +184,7 @@ a {
 
 /* Work Section */
 .work-section {
-  padding: 48px 20px;
+  padding: 48px;
 }
 
 .work-header {
@@ -360,10 +360,10 @@ a {
 /* About Section */
 .about-section {
   background: #0d0d0d;
-  padding: 48px 20px;
+  padding: 48px;
   border-radius: 28px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  margin: 0 20px 48px;
+  margin: 0 48px 48px;
 }
 
 .about-content {
@@ -379,10 +379,10 @@ a {
 /* Contact Section */
 .contact-section {
   background: #f3f3f3;
-  padding: 48px 20px;
+  padding: 48px;
   text-align: center;
   color: #111;
-  margin: 0 20px 40px;
+  margin: 0 48px 40px;
   border-radius: 28px;
 }
 
