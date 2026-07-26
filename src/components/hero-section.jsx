@@ -48,7 +48,7 @@ export function HeroSection() {
           />
           <div className="hero-card-info">
             <p>Featured</p>
-            <h2>Midnight Bloom</h2>
+            <h2>Utopia</h2>
           </div>
         </motion.div>
       </div>
