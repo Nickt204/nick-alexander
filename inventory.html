@@ -142,6 +142,33 @@
 
     .export-btn:hover { border-color: var(--accent); color: var(--accent); }
 
+    .save-btn {
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 7px 16px;
+      transition: opacity 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .save-btn:hover { opacity: 0.85; }
+    .save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .save-status {
+      font-size: 12px;
+      color: var(--green);
+      display: none;
+    }
+
+    .save-status.error { color: var(--red); }
+    .save-status.visible { display: inline; }
+
     /* ── TABLE ───────────────────────────────────────── */
     .table-wrap {
       overflow-x: auto;
@@ -418,7 +445,9 @@
   <button class="filter-btn" data-filter="available">Available</button>
   <button class="filter-btn" data-filter="sold">Sold</button>
   <div class="toolbar-spacer"></div>
-  <button class="export-btn" id="btn-export">↓ Export JSON</button>
+  <button class="export-btn" id="btn-reset" style="color:#ef4444;border-color:#3a1a1a" title="Clears all edits and reloads the built-in defaults">↺ Reset</button>
+  <span class="save-status" id="save-status"></span>
+  <button class="save-btn" id="btn-save">⬆ Save to artworks.js</button>
   <button class="add-btn" id="btn-add">+ Add Artwork</button>
 </div>
 
@@ -609,66 +638,6 @@
       price: null,
       status: "available",
       notes: ""
-    },
-    {
-      id: 9,
-      title: "Gallery Work 1",
-      year: "",
-      medium: "",
-      category: "",
-      image: "images/gallery-1.webp",
-      location: "Studio",
-      price: null,
-      status: "available",
-      notes: "Title and details to be confirmed."
-    },
-    {
-      id: 10,
-      title: "Gallery Work 2",
-      year: "",
-      medium: "",
-      category: "",
-      image: "images/gallery-2.webp",
-      location: "Studio",
-      price: null,
-      status: "available",
-      notes: "Title and details to be confirmed."
-    },
-    {
-      id: 11,
-      title: "Gallery Work 3",
-      year: "",
-      medium: "",
-      category: "",
-      image: "images/gallery-3.webp",
-      location: "Studio",
-      price: null,
-      status: "available",
-      notes: "Title and details to be confirmed."
-    },
-    {
-      id: 12,
-      title: "Gallery Work 4",
-      year: "",
-      medium: "",
-      category: "",
-      image: "images/gallery-4.webp",
-      location: "Studio",
-      price: null,
-      status: "available",
-      notes: "Title and details to be confirmed."
-    },
-    {
-      id: 13,
-      title: "Gallery Work 5",
-      year: "",
-      medium: "",
-      category: "",
-      image: "images/gallery-5.webp",
-      location: "Studio",
-      price: null,
-      status: "available",
-      notes: "Title and details to be confirmed."
     }
   ];
 
@@ -872,15 +841,43 @@
   });
 
   // ── EXPORT ───────────────────────────────────────────────────────────────────
-  document.getElementById('btn-export').addEventListener('click', () => {
-    const json = JSON.stringify(artworks, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'nick-alexander-inventory.json';
-    a.click();
-    URL.revokeObjectURL(url);
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    if (!confirm('Reset to defaults? This will remove all edits saved in this browser.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  });
+
+  document.getElementById('btn-save').addEventListener('click', async () => {
+    const btn = document.getElementById('btn-save');
+    const status = document.getElementById('save-status');
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+    status.className = 'save-status';
+    status.textContent = '';
+    try {
+      const res = await fetch('http://localhost:3001/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(artworks),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        status.textContent = '✓ Saved to artworks.js';
+        status.className = 'save-status visible';
+        setTimeout(() => { status.className = 'save-status'; }, 3000);
+      } else {
+        throw new Error(data.error || 'Unknown error');
+      }
+    } catch (err) {
+      const isOffline = err.message.includes('fetch') || err.message.includes('Failed');
+      status.textContent = isOffline
+        ? '✗ Server not running — start with: node inventory-server.js'
+        : `✗ ${err.message}`;
+      status.className = 'save-status error visible';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '⬆ Save to artworks.js';
+    }
   });
 
   // ── INIT ─────────────────────────────────────────────────────────────────────
