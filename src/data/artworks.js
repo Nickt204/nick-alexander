@@ -51,8 +51,8 @@ export const artworks = [
   {
     title: "Paradise",
     year: "2023",
-    medium: "Digital collage",
-    category: "Digital",
+    medium: "Spray paint and acrylic on aluminium panel",
+    category: "Painting",
     image: "images/paradise.webp",
     description: "Layered collage using bold shapes, visual noise, and dreamlike color.",
     location: "Studio",
@@ -79,4 +79,4 @@ export const artworks = [
   },
 ];
 
-export const categories = ["All","Painting","Digital"];
+export const categories = ["All","Painting"];
