@@ -2,7 +2,7 @@ export const artworks = [
   {
     title: "Stairway to Daybreak",
     year: "2026",
-    medium: "Spray paint and acrylic on aluminium panel",
+    medium: "Spray paint and acrylic on wooden panel",
     category: "Painting",
     image: "images/stairway-to-day-break.webp",
     description: "A layered abstract composition exploring sunset light, movement, memory, and the lingering feeling of staying awake until sunrise.",
