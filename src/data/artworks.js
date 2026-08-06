@@ -39,6 +39,7 @@ export const artworks = [
     category: "Drawing",
     image: "/images/carousel.webp",
     description: "A minimal figurative work balancing negative space with expressive line.",
+    sold: true,
   },
   {
     title: "Paradise",

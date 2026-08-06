@@ -89,7 +89,10 @@ export function GallerySection() {
                         {art.medium} · {art.year}
                       </p>
                     </div>
-                    <span className="card-category">{art.category}</span>
+                    <div className="card-badges">
+                      {art.sold && <span className="card-sold">Sold</span>}
+                      <span className="card-category">{art.category}</span>
+                    </div>
                   </div>
                   <p className="card-description">{art.description}</p>
                 </CardContent>
