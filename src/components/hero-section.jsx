@@ -14,24 +14,42 @@ export function HeroSection() {
           transition={{ duration: 0.8 }}
           className="hero-copy"
         >
-          <p className="tagline">
-            Contemporary artwork, personal experiments, and visual stories
-          </p>
-          <h1 className="hero-title">
-            Artwork with texture, feeling, and a little beautiful chaos.
-          </h1>
+          <div className="hero-eyebrow">
+            <span className="hero-artist-name">Nick Alexander</span>
+            <span className="hero-eyebrow-divider" />
+            <span className="hero-commission-tag">Available for commissions</span>
+          </div>
+
+          <div className="hero-title-wrap">
+            <span className="hero-na-watermark" aria-hidden="true">NA</span>
+            <h1 className="hero-title">
+              <span className="hero-title-line hero-title-bright">Artwork</span>
+              <span className="hero-title-line hero-title-muted">with texture,</span>
+              <span className="hero-title-line hero-title-bright">feeling, and</span>
+              <span className="hero-title-line hero-title-bright">
+                beautiful <span className="hero-title-underline">chaos.</span>
+              </span>
+            </h1>
+          </div>
+
           <p className="hero-description">
-            A curated portfolio of paintings, drawings, digital pieces, and
-            mixed-media work. Replace these sample pieces with your own images
-            and descriptions.
+            Works made from instinct and material — painting, photography, and
+            objects that sit between the familiar and the strange.
           </p>
-          <div className="button-row">
+
+          <div className="button-row button-row--stacked">
             <Button asChild>
               <a href="#work">View the work</a>
             </Button>
             <Button asChild variant="outline">
               <a href="#contact">Get in touch</a>
             </Button>
+          </div>
+
+          <div className="hero-stats">
+            <span>12 works available</span>
+            <span className="hero-stats-dot">·</span>
+            <span>Est. 2021</span>
           </div>
         </motion.div>
 
