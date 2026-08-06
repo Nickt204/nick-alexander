@@ -445,7 +445,6 @@
   <button class="filter-btn" data-filter="available">Available</button>
   <button class="filter-btn" data-filter="sold">Sold</button>
   <div class="toolbar-spacer"></div>
-  <button class="export-btn" id="btn-reset" style="color:#ef4444;border-color:#3a1a1a" title="Clears all edits and reloads the built-in defaults">↺ Reset</button>
   <span class="save-status" id="save-status"></span>
   <button class="save-btn" id="btn-save">⬆ Save to artworks.js</button>
   <button class="add-btn" id="btn-add">+ Add Artwork</button>
@@ -840,13 +839,7 @@
     document.getElementById('lightbox').classList.remove('open');
   });
 
-  // ── EXPORT ───────────────────────────────────────────────────────────────────
-  document.getElementById('btn-reset').addEventListener('click', () => {
-    if (!confirm('Reset to defaults? This will remove all edits saved in this browser.')) return;
-    localStorage.removeItem(STORAGE_KEY);
-    location.reload();
-  });
-
+  // ── SAVE ─────────────────────────────────────────────────────────────────────
   document.getElementById('btn-save').addEventListener('click', async () => {
     const btn = document.getElementById('btn-save');
     const status = document.getElementById('save-status');
