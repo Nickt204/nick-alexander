@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nick Alexander — Artwork Inventory</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --surface-2: #1c1c1c;
+      --border: #2a2a2a;
+      --text: #e8e8e8;
+      --muted: #888;
+      --accent: #fbbf24;
+      --green: #22c55e;
+      --red: #ef4444;
+      --radius: 12px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, "Segoe UI", system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ──────────────────────────────────────── */
+    header {
+      padding: 28px 32px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .header-title h1 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .header-title p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    .header-stats {
+      display: flex;
+      gap: 24px;
+    }
+
+    .stat {
+      text-align: right;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── TOOLBAR ─────────────────────────────────────── */
+    .toolbar {
+      padding: 16px 32px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .search-input {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 13px;
+      padding: 7px 12px;
+      width: 220px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: var(--accent); }
+
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 12px;
+      padding: 7px 14px;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+    .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 600; }
+
+    .toolbar-spacer { flex: 1; }
+
+    .add-btn {
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 16px;
+      transition: opacity 0.15s;
+    }
+
+    .add-btn:hover { opacity: 0.85; }
+
+    .export-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 7px 16px;
+      transition: all 0.15s;
+    }
+
+    .export-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── TABLE ───────────────────────────────────────── */
+    .table-wrap {
+      overflow-x: auto;
+      padding: 0 32px 40px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    thead th {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.6px;
+      padding: 10px 16px;
+      text-align: left;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+
+    tbody tr:hover { background: var(--surface); }
+
+    tbody td {
+      padding: 14px 16px;
+      vertical-align: middle;
+    }
+
+    /* ── THUMBNAIL ───────────────────────────────────── */
+    .thumb-cell { width: 72px; }
+
+    .thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: var(--surface-2);
+      display: block;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .thumb:hover { transform: scale(1.06); }
+
+    .thumb-placeholder {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      border: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    /* ── TITLE / META ────────────────────────────────── */
+    .title-cell .art-title {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .title-cell .art-meta {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    /* ── BADGES ──────────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 9px;
+    }
+
+    .badge-available { background: rgba(34,197,94,0.12); color: var(--green); }
+    .badge-sold      { background: rgba(239,68,68,0.12);  color: var(--red);   }
+
+    /* ── PRICE ───────────────────────────────────────── */
+    .price-cell {
+      font-weight: 500;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .price-tbd { color: var(--muted); font-style: italic; font-weight: 400; }
+
+    /* ── LOCATION ────────────────────────────────────── */
+    .location-cell { color: var(--muted); font-size: 13px; }
+
+    /* ── ACTIONS ─────────────────────────────────────── */
+    .action-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 12px;
+      padding: 4px 10px;
+      margin-right: 4px;
+      transition: all 0.12s;
+    }
+
+    .action-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── EMPTY STATE ─────────────────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+
+    /* ── MODAL ───────────────────────────────────────── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      max-width: 480px;
+      width: 100%;
+      padding: 28px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal h2 { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+
+    .form-row { margin-bottom: 16px; }
+
+    .form-row label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      padding: 9px 12px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus { border-color: var(--accent); }
+
+    .form-row select option { background: var(--surface-2); }
+
+    .form-row textarea { height: 80px; resize: vertical; }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+      justify-content: flex-end;
+    }
+
+    .btn-cancel {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      padding: 9px 18px;
+    }
+
+    .btn-save {
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 18px;
+    }
+
+    /* ── LIGHTBOX ────────────────────────────────────── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 28px;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-title">
+    <h1>Nick Alexander — Artwork Inventory</h1>
+    <p>Private catalogue &middot; For Nick &amp; Michelle</p>
+  </div>
+  <div class="header-stats">
+    <div class="stat">
+      <div class="stat-value" id="stat-total">0</div>
+      <div class="stat-label">Total Works</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" style="color:var(--green)" id="stat-available">0</div>
+      <div class="stat-label">Available</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" style="color:var(--red)" id="stat-sold">0</div>
+      <div class="stat-label">Sold</div>
+    </div>
+  </div>
+</header>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <input class="search-input" id="search" placeholder="Search by title, medium, location…" type="text" />
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="available">Available</button>
+  <button class="filter-btn" data-filter="sold">Sold</button>
+  <div class="toolbar-spacer"></div>
+  <button class="export-btn" id="btn-export">↓ Export JSON</button>
+  <button class="add-btn" id="btn-add">+ Add Artwork</button>
+</div>
+
+<!-- TABLE -->
+<div class="table-wrap">
+  <table id="inventory-table">
+    <thead>
+      <tr>
+        <th class="thumb-cell"></th>
+        <th>Title</th>
+        <th>Year</th>
+        <th>Medium</th>
+        <th>Category</th>
+        <th>Location</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+  <div class="empty-state" id="empty-state" style="display:none">No artworks match your search.</div>
+</div>
+
+<!-- ADD / EDIT MODAL -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <h2 id="modal-title">Add Artwork</h2>
+    <form id="artwork-form">
+      <input type="hidden" id="form-id" />
+      <div class="form-row">
+        <label>Title *</label>
+        <input type="text" id="form-title" required />
+      </div>
+      <div class="form-row">
+        <label>Year</label>
+        <input type="text" id="form-year" placeholder="e.g. 2025" />
+      </div>
+      <div class="form-row">
+        <label>Medium</label>
+        <input type="text" id="form-medium" placeholder="e.g. Acrylic on canvas" />
+      </div>
+      <div class="form-row">
+        <label>Category</label>
+        <select id="form-category">
+          <option value="">— select —</option>
+          <option>Painting</option>
+          <option>Digital</option>
+          <option>Mixed Media</option>
+          <option>Drawing</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Location</label>
+        <input type="text" id="form-location" placeholder="e.g. Studio, Gallery, Private collection" />
+      </div>
+      <div class="form-row">
+        <label>Price (£)</label>
+        <input type="number" id="form-price" placeholder="e.g. 850" min="0" step="0.01" />
+      </div>
+      <div class="form-row">
+        <label>Status</label>
+        <select id="form-status">
+          <option value="available">Available</option>
+          <option value="sold">Sold</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Image path (relative to site root)</label>
+        <input type="text" id="form-image" placeholder="e.g. /images/my-artwork.webp" />
+      </div>
+      <div class="form-row">
+        <label>Notes</label>
+        <textarea id="form-notes" placeholder="Dimensions, framing, provenance…"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" id="btn-cancel">Cancel</button>
+        <button type="submit" class="btn-save">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">&times;</button>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<script>
+  // ── DATA ────────────────────────────────────────────────────────────────────
+  const STORAGE_KEY = 'nick-alexander-inventory';
+
+  const defaultArtworks = [
+    {
+      id: 1,
+      title: "Stairway to Daybreak",
+      year: "2026",
+      medium: "Acrylic on canvas",
+      category: "Painting",
+      image: "images/stairway-to-day-break.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: "A layered abstract composition exploring sunset light, movement, memory, and the lingering feeling of staying awake until sunrise."
+    },
+    {
+      id: 2,
+      title: "Chroma Crumble",
+      year: "2025",
+      medium: "Digital illustration",
+      category: "Digital",
+      image: "images/chroma-crumble.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: "A moody digital piece exploring memory, movement, and fragments of light."
+    },
+    {
+      id: 3,
+      title: "Eden Collapse",
+      year: "2025",
+      medium: "Mixed media",
+      category: "Mixed Media",
+      image: "images/eden-collapse.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: "Texture-heavy composition inspired by stillness, domestic space, and silence."
+    },
+    {
+      id: 4,
+      title: "Arcadian Shift",
+      year: "2024",
+      medium: "Oil pastel",
+      category: "Drawing",
+      image: "images/arcadian-shift.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: "Warm tones and loose marks capture the feeling of late afternoon light."
+    },
+    {
+      id: 5,
+      title: "Carousel",
+      year: "2024",
+      medium: "Ink and wash",
+      category: "Drawing",
+      image: "images/carousel.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: "A minimal figurative work balancing negative space with expressive line."
+    },
+    {
+      id: 6,
+      title: "Paradise",
+      year: "2023",
+      medium: "Digital collage",
+      category: "Digital",
+      image: "images/paradise.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: "Layered collage using bold shapes, visual noise, and dreamlike color."
+    },
+    {
+      id: 7,
+      title: "Utopia",
+      year: "",
+      medium: "",
+      category: "",
+      image: "images/utopia.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: ""
+    },
+    {
+      id: 8,
+      title: "Vestige",
+      year: "",
+      medium: "",
+      category: "",
+      image: "images/vestige.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: ""
+    },
+    {
+      id: 9,
+      title: "Gallery Work 1",
+      year: "",
+      medium: "",
+      category: "",
+      image: "images/gallery-1.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: "Title and details to be confirmed."
+    },
+    {
+      id: 10,
+      title: "Gallery Work 2",
+      year: "",
+      medium: "",
+      category: "",
+      image: "images/gallery-2.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: "Title and details to be confirmed."
+    },
+    {
+      id: 11,
+      title: "Gallery Work 3",
+      year: "",
+      medium: "",
+      category: "",
+      image: "images/gallery-3.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: "Title and details to be confirmed."
+    },
+    {
+      id: 12,
+      title: "Gallery Work 4",
+      year: "",
+      medium: "",
+      category: "",
+      image: "images/gallery-4.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: "Title and details to be confirmed."
+    },
+    {
+      id: 13,
+      title: "Gallery Work 5",
+      year: "",
+      medium: "",
+      category: "",
+      image: "images/gallery-5.webp",
+      location: "Studio",
+      price: null,
+      status: "available",
+      notes: "Title and details to be confirmed."
+    }
+  ];
+
+  // ── STATE ───────────────────────────────────────────────────────────────────
+  function loadData() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : defaultArtworks;
+    } catch { return defaultArtworks; }
+  }
+
+  function saveData(artworks) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(artworks));
+  }
+
+  let artworks = loadData();
+  let filterStatus = 'all';
+  let searchTerm = '';
+  let nextId = Math.max(0, ...artworks.map(a => a.id)) + 1;
+
+  // ── RENDER ──────────────────────────────────────────────────────────────────
+  function filteredArtworks() {
+    return artworks.filter(a => {
+      const matchStatus = filterStatus === 'all' || a.status === filterStatus;
+      const q = searchTerm.toLowerCase();
+      const matchSearch = !q ||
+        a.title.toLowerCase().includes(q) ||
+        (a.medium || '').toLowerCase().includes(q) ||
+        (a.location || '').toLowerCase().includes(q) ||
+        (a.category || '').toLowerCase().includes(q) ||
+        (a.year || '').includes(q);
+      return matchStatus && matchSearch;
+    });
+  }
+
+  function formatPrice(price) {
+    if (price === null || price === undefined || price === '') return '<span class="price-tbd">TBD</span>';
+    return '£' + Number(price).toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
+
+  function render() {
+    const rows = filteredArtworks();
+    const tbody = document.getElementById('table-body');
+    const empty = document.getElementById('empty-state');
+
+    // Stats (always from full list)
+    document.getElementById('stat-total').textContent = artworks.length;
+    document.getElementById('stat-available').textContent = artworks.filter(a => a.status === 'available').length;
+    document.getElementById('stat-sold').textContent = artworks.filter(a => a.status === 'sold').length;
+
+    if (rows.length === 0) {
+      tbody.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    tbody.innerHTML = rows.map(a => `
+      <tr>
+        <td class="thumb-cell">
+          ${a.image
+            ? `<img class="thumb" src="${a.image}" alt="${a.title}" loading="lazy" data-lightbox="${a.image}" />`
+            : `<div class="thumb-placeholder">No image</div>`
+          }
+        </td>
+        <td class="title-cell">
+          <div class="art-title">${a.title}</div>
+          ${a.notes ? `<div class="art-meta">${a.notes.length > 60 ? a.notes.slice(0, 60) + '…' : a.notes}</div>` : ''}
+        </td>
+        <td>${a.year || '<span style="color:var(--muted)">—</span>'}</td>
+        <td>${a.medium || '<span style="color:var(--muted)">—</span>'}</td>
+        <td>${a.category || '<span style="color:var(--muted)">—</span>'}</td>
+        <td class="location-cell">${a.location || '<span style="color:var(--muted)">—</span>'}</td>
+        <td class="price-cell">${formatPrice(a.price)}</td>
+        <td>
+          <span class="badge ${a.status === 'sold' ? 'badge-sold' : 'badge-available'}">
+            ${a.status === 'sold' ? 'Sold' : 'Available'}
+          </span>
+        </td>
+        <td>
+          <button class="action-btn" data-action="edit" data-id="${a.id}">Edit</button>
+          <button class="action-btn" data-action="delete" data-id="${a.id}">Delete</button>
+        </td>
+      </tr>
+    `).join('');
+
+    // Thumbnail lightbox
+    tbody.querySelectorAll('[data-lightbox]').forEach(img => {
+      img.addEventListener('click', () => openLightbox(img.dataset.lightbox, img.alt));
+    });
+
+    // Edit / delete buttons
+    tbody.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = Number(btn.dataset.id);
+        if (btn.dataset.action === 'edit') openModal(id);
+        else if (btn.dataset.action === 'delete') deleteArtwork(id);
+      });
+    });
+  }
+
+  // ── MODAL ───────────────────────────────────────────────────────────────────
+  function openModal(id) {
+    const modal = document.getElementById('modal');
+    const artwork = id ? artworks.find(a => a.id === id) : null;
+
+    document.getElementById('modal-title').textContent = artwork ? 'Edit Artwork' : 'Add Artwork';
+    document.getElementById('form-id').value = artwork ? artwork.id : '';
+    document.getElementById('form-title').value = artwork ? artwork.title : '';
+    document.getElementById('form-year').value = artwork ? artwork.year || '' : '';
+    document.getElementById('form-medium').value = artwork ? artwork.medium || '' : '';
+    document.getElementById('form-category').value = artwork ? artwork.category || '' : '';
+    document.getElementById('form-location').value = artwork ? artwork.location || '' : '';
+    document.getElementById('form-price').value = artwork && artwork.price !== null ? artwork.price : '';
+    document.getElementById('form-status').value = artwork ? artwork.status : 'available';
+    document.getElementById('form-image').value = artwork ? artwork.image || '' : '';
+    document.getElementById('form-notes').value = artwork ? artwork.notes || '' : '';
+
+    modal.classList.add('open');
+    document.getElementById('form-title').focus();
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  document.getElementById('btn-add').addEventListener('click', () => openModal(null));
+  document.getElementById('btn-cancel').addEventListener('click', closeModal);
+  document.getElementById('modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('modal')) closeModal();
+  });
+
+  document.getElementById('artwork-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const id = document.getElementById('form-id').value;
+    const priceVal = document.getElementById('form-price').value;
+
+    const data = {
+      title: document.getElementById('form-title').value.trim(),
+      year: document.getElementById('form-year').value.trim(),
+      medium: document.getElementById('form-medium').value.trim(),
+      category: document.getElementById('form-category').value,
+      location: document.getElementById('form-location').value.trim(),
+      price: priceVal !== '' ? Number(priceVal) : null,
+      status: document.getElementById('form-status').value,
+      image: document.getElementById('form-image').value.trim(),
+      notes: document.getElementById('form-notes').value.trim()
+    };
+
+    if (id) {
+      const idx = artworks.findIndex(a => a.id === Number(id));
+      artworks[idx] = { ...artworks[idx], ...data };
+    } else {
+      artworks.push({ id: nextId++, ...data });
+    }
+
+    saveData(artworks);
+    closeModal();
+    render();
+  });
+
+  // ── DELETE ──────────────────────────────────────────────────────────────────
+  function deleteArtwork(id) {
+    if (!confirm('Delete this artwork from the inventory?')) return;
+    artworks = artworks.filter(a => a.id !== id);
+    saveData(artworks);
+    render();
+  }
+
+  // ── FILTERS & SEARCH ────────────────────────────────────────────────────────
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterStatus = btn.dataset.filter;
+      render();
+    });
+  });
+
+  document.getElementById('search').addEventListener('input', e => {
+    searchTerm = e.target.value;
+    render();
+  });
+
+  // ── LIGHTBOX ─────────────────────────────────────────────────────────────────
+  function openLightbox(src, alt) {
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox-img').alt = alt;
+    lb.classList.add('open');
+  }
+
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target !== document.getElementById('lightbox-img')) {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+  });
+
+  document.getElementById('lightbox-close').addEventListener('click', () => {
+    document.getElementById('lightbox').classList.remove('open');
+  });
+
+  // ── EXPORT ───────────────────────────────────────────────────────────────────
+  document.getElementById('btn-export').addEventListener('click', () => {
+    const json = JSON.stringify(artworks, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'nick-alexander-inventory.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // ── INIT ─────────────────────────────────────────────────────────────────────
+  render();
+</script>
+
+</body>
+</html>
