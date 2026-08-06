@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "./button";
 import { Navbar } from "./navbar";
+import { artworks } from "../data/artworks";
 
 export function HeroSection() {
   return (
@@ -47,7 +48,7 @@ export function HeroSection() {
           </div>
 
           <div className="hero-stats">
-            <span>12 works available</span>
+            <span>{artworks.filter((a) => !a.sold).length} works available</span>
             <span className="hero-stats-dot">·</span>
             <span>Est. 2021</span>
           </div>
