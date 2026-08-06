@@ -43,15 +43,20 @@ The visual identity is dark, minimal, and considered — matching the moody, tex
 ```
 nick-alexander/
 ├── src/
-│   ├── App.jsx          # Main app — all components and page sections live here currently
-│   ├── App.css          # All component and section styles
-│   ├── index.css        # Global CSS variables, typography, base styles
-│   ├── main.jsx         # React entry point
-│   └── assets/          # Static assets (hero image, SVGs)
-├── public/              # Public assets served directly
-├── images/              # Artwork images referenced in App.jsx
-├── IMAGES_ROUGH/        # Raw/unprocessed image source files
-├── index.html           # HTML entry point
+│   ├── App.jsx               # Main app — all components and page sections live here currently
+│   ├── App.css               # All component and section styles
+│   ├── index.css             # Global CSS variables, typography, base styles
+│   ├── main.jsx              # React entry point
+│   ├── assets/               # Static assets (hero image, SVGs)
+│   ├── components/           # React components (gallery, hero, about, contact, etc.)
+│   └── data/
+│       └── artworks.js       # Single source of truth for all artwork data
+├── public/                   # Public assets served directly
+├── images/                   # Artwork images (gallery-1 to gallery-5 are show photos, not for sale)
+├── IMAGES_ROUGH/             # Raw/unprocessed image source files
+├── inventory.html            # Private inventory management UI
+├── inventory-server.js       # Local Node server — serves inventory and writes artworks.js
+├── index.html                # HTML entry point
 └── package.json
 ```
 
@@ -66,18 +71,51 @@ nick-alexander/
 
 ## Known artwork (current)
 
-Artwork data is currently hardcoded in `src/App.jsx` in the `artworks` array:
+Artwork data lives in `src/data/artworks.js` and is the single source of truth for both the website gallery and the inventory. Each artwork object supports: `title`, `year`, `medium`, `category`, `image`, `description`, `price`, `location`, `sold`.
 
-| Title | Year | Medium | Category |
-|---|---|---|---|
-| Stairway to Daybreak | 2026 | Acrylic on canvas | Painting |
-| Chroma Crumble | 2025 | Digital illustration | Digital |
-| Eden Collapse | 2025 | Mixed media | Mixed Media |
-| Arcadian Shift | 2024 | Oil pastel | Drawing |
-| Carousel | 2024 | Ink and wash | Drawing |
-| Paradise | 2023 | Digital collage | Digital |
+| Title | Year | Medium | Category | Status |
+|---|---|---|---|---|
+| Stairway to Daybreak | 2026 | Acrylic on canvas | Painting | Available |
+| Chroma Crumble | 2025 | Digital illustration | Digital | Available |
+| Eden Collapse | 2025 | Mixed media | Mixed Media | Available |
+| Arcadian Shift | 2024 | Oil pastel | Drawing | Available |
+| Carousel | 2024 | Ink and wash | Drawing | **Sold** |
+| Paradise | 2023 | Digital collage | Digital | Available |
+| Utopia | — | — | — | Available |
+| Vestige | — | — | — | Available |
 
 Gallery filter categories: All, Painting, Digital, Mixed Media, Drawing.
+
+When `sold: true` is set on an artwork, a red **Sold** badge appears on its gallery card on the website.
+
+## Inventory system
+
+A private artwork inventory tool for Nick and Michelle to manage the catalogue.
+
+| File | Purpose |
+|---|---|
+| `inventory.html` | Inventory UI — thumbnails, title, year, medium, category, location, price, status, notes |
+| `inventory-server.js` | Local Node.js server — serves the inventory app and writes saves directly to `artworks.js` |
+| `src/data/artworks.js` | Written to on every save — website gallery updates automatically |
+
+**To run:**
+```
+npm run inventory
+```
+Then open **http://localhost:3001** in a browser.
+
+**Workflow:**
+1. Run `npm run inventory`
+2. Make changes in the UI (edit, add, delete artwork)
+3. Click **⬆ Save to artworks.js** — writes directly to `src/data/artworks.js`
+4. Commit and push — `git add src/data/artworks.js && git commit -m "Update inventory" && git push`
+5. Other person runs `git pull` to get the latest
+
+**Notes:**
+- The server only needs to be running while actively using the inventory
+- Vite dev server (`npm run dev`) runs separately on port 5173 and is unaffected
+- `gallery-1.webp` through `gallery-5.webp` in `images/` are art show photos, not inventory items
+- Nick and Michelle both need the repo cloned locally to use the inventory; GitHub Desktop is recommended for non-terminal Git workflow
 
 ## Design system
 
