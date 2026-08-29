@@ -28,12 +28,6 @@ export function ArtworkPage() {
     );
   }
 
-  const subject = encodeURIComponent(`Enquiry about "${art.title}"`);
-  const body = encodeURIComponent(
-    `Hi Nick,\n\nI'm interested in purchasing "${art.title}" (${art.year}).\n\nPlease let me know the next steps.\n\nThanks`
-  );
-  const mailtoHref = `mailto:nickalexanderart@gmail.com?subject=${subject}&body=${body}`;
-
   return (
     <div>
       <div className="artwork-page-wrap">
@@ -72,21 +66,27 @@ export function ArtworkPage() {
                 </div>
               ) : (
                 <div className="artwork-detail-buy-block">
-                  {art.price && (
-                    <p className="artwork-detail-price">£{art.price.toLocaleString()}</p>
-                  )}
-                  <div className="artwork-detail-actions">
-                    <a href={mailtoHref} className="btn btn-primary">
-                      Enquire to buy
-                    </a>
-                    <Link to="/" className="btn btn-outline">
-                      View more work
-                    </Link>
+                    {art.price && (
+                      <p className="artwork-detail-price">£{art.price.toLocaleString()}</p>
+                    )}
+                    <div className="artwork-detail-actions">
+                      {art.buyUrl ? (
+                        <a href={art.buyUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                          Buy now
+                        </a>
+                      ) : (
+                        <a href="mailto:nickalexanderart@gmail.com" className="btn btn-primary">
+                          Enquire to buy
+                        </a>
+                      )}
+                      <Link to="/" className="btn btn-outline">
+                        View more work
+                      </Link>
+                    </div>
+                    <p className="artwork-detail-note">
+                      You'll be taken to Nick's secure store to complete your purchase.
+                    </p>
                   </div>
-                  <p className="artwork-detail-note">
-                    All sales are handled directly with the artist. Shipping and collection can be arranged.
-                  </p>
-                </div>
               )}
             </div>
           </div>

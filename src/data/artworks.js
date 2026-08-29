@@ -1,3 +1,5 @@
+const STORE = "https://nickalexander.bigcartel.com/product";
+
 export const artworks = [
   {
     slug: "stairway-to-daybreak",
@@ -9,6 +11,7 @@ export const artworks = [
     description: "A layered abstract composition exploring sunset light, movement, memory, and the lingering feeling of staying awake until sunrise.",
     price: 750,
     location: "Studio",
+    buyUrl: `${STORE}/stairway-to-daybreak`,
   },
   {
     slug: "chroma-crumble",
@@ -19,6 +22,7 @@ export const artworks = [
     image: "/images/chroma-crumble.webp",
     description: "A moody digital piece exploring memory, movement, and fragments of light.",
     location: "Studio",
+    buyUrl: `${STORE}/chroma-crumble`,
   },
   {
     slug: "eden-collapse",
@@ -29,6 +33,7 @@ export const artworks = [
     image: "/images/eden-collapse.webp",
     description: "Texture-heavy composition inspired by stillness, domestic space, and silence.",
     location: "Studio",
+    buyUrl: `${STORE}/eden-collapse`,
   },
   {
     slug: "arcadian-shift",
@@ -53,6 +58,7 @@ export const artworks = [
     price: 750,
     location: "Studio",
     sold: true,
+    buyUrl: `${STORE}/carousel`,
   },
   {
     slug: "paradise",
@@ -63,6 +69,7 @@ export const artworks = [
     image: "/images/paradise.webp",
     description: "Layered collage using bold shapes, visual noise, and dreamlike color.",
     location: "Studio",
+    buyUrl: `${STORE}/paradise`,
   },
   {
     slug: "utopia",
@@ -102,14 +109,75 @@ export const artworks = [
     slug: "phantasmagoria",
     title: "Phantasmagoria",
     year: "2024",
-    medium: "spray paint and acrylic on aluminium panel",
+    medium: "Spray paint and acrylic on aluminium panel",
     category: "Painting",
     image: "/images/phantasmagoria-inventory.png",
     description: "",
     price: 750,
     location: "Sold",
     sold: true,
+    buyUrl: `${STORE}/phantasmagoria`,
+  },
+  {
+    slug: "confluence",
+    title: "Confluence",
+    year: "2024",
+    medium: "Spray paint and acrylic on aluminium panel",
+    category: "Painting",
+    image: "https://assets.bigcartel.com/product_images/413726577/IMG_0568.png?auto=format&fit=max&w=1200",
+    description: "Presented in a handmade wooden float frame. Painting size 50 cm × 70 cm.",
+    price: 750,
+    location: "Studio",
+    buyUrl: `${STORE}/confluence`,
+  },
+  {
+    slug: "dawn-portals",
+    title: "Dawn Portals",
+    year: "2024",
+    medium: "Spray paint and acrylic on aluminium panel",
+    category: "Painting",
+    image: "https://assets.bigcartel.com/product_images/413726298/IMG_0571.png?auto=format&fit=max&w=1200",
+    description: "Presented in a handmade wooden float frame. Painting size 60 cm × 60 cm.",
+    price: 700,
+    location: "Studio",
+    buyUrl: `${STORE}/dawn-portals-1`,
+  },
+  {
+    slug: "wilting-wonderland",
+    title: "Wilting Wonderland",
+    year: "2024",
+    medium: "Spray paint and acrylic on aluminium panel",
+    category: "Painting",
+    image: "https://assets.bigcartel.com/product_images/413627250/IMG_0564.png?auto=format&fit=max&w=1200",
+    description: "Presented in a wooden float frame. Painting size 50 cm × 70 cm.",
+    price: 750,
+    location: "Studio",
+    buyUrl: `${STORE}/wilting-wonderland`,
+  },
+  {
+    slug: "apocalypso",
+    title: "Apocalypso",
+    year: "2024",
+    medium: "Spray paint and acrylic on aluminium panel",
+    category: "Painting",
+    image: "https://assets.bigcartel.com/product_images/413626482/IMG_0566.png?auto=format&fit=max&w=1200",
+    description: "Presented in a wooden float frame. Painting size 50 cm × 70 cm.",
+    price: 750,
+    location: "Studio",
+    buyUrl: `${STORE}/apocalypso`,
+  },
+  {
+    slug: "memory-sequence",
+    title: "Memory Sequence",
+    year: "2023",
+    medium: "UV print on aluminium panel",
+    category: "Print",
+    image: "",
+    description: "60 cm × 60 cm (framed).",
+    price: 120,
+    location: "Studio",
+    buyUrl: `${STORE}/memory-sequence`,
   },
 ];
 
-export const categories = ["All","Painting"];
+export const categories = ["All", "Painting", "Print"];
