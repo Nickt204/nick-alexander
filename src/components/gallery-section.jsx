@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { artworks, categories } from "../data/artworks";
 import { Card, CardContent } from "./card";
@@ -79,24 +80,26 @@ export function GallerySection() {
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: index * 0.05 }}
             >
-              <Card>
-                <img src={art.image} alt={art.title} className="card-image" />
-                <CardContent>
-                  <div className="card-header">
-                    <div>
-                      <h3>{art.title}</h3>
-                      <p className="card-meta">
-                        {art.medium} · {art.year}
-                      </p>
+              <Link to={`/artwork/${art.slug}`} className="card-link">
+                <Card>
+                  <img src={art.image} alt={art.title} className="card-image" />
+                  <CardContent>
+                    <div className="card-header">
+                      <div>
+                        <h3>{art.title}</h3>
+                        <p className="card-meta">
+                          {art.medium} · {art.year}
+                        </p>
+                      </div>
+                      <div className="card-badges">
+                        {art.sold && <span className="card-sold">Sold</span>}
+                        <span className="card-category">{art.category}</span>
+                      </div>
                     </div>
-                    <div className="card-badges">
-                      {art.sold && <span className="card-sold">Sold</span>}
-                      <span className="card-category">{art.category}</span>
-                    </div>
-                  </div>
-                  <p className="card-description">{art.description}</p>
-                </CardContent>
-              </Card>
+                    <p className="card-description">{art.description}</p>
+                  </CardContent>
+                </Card>
+              </Link>
             </motion.article>
           ))
         ) : (
