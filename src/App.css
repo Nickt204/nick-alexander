@@ -513,7 +513,22 @@ a {
   margin: 0 48px 48px;
 }
 
+.about-body {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.about-profile-pic {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
 .about-content {
+  flex: 1;
   max-width: 800px;
 }
 

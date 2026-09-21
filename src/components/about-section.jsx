@@ -1,9 +1,17 @@
+import profilePic from "../../images/profile-pic-nick.png";
+
 export function AboutSection() {
   return (
     <section id="about" className="about-section">
       <p className="section-label">About</p>
       <h2 className="section-title">The artist behind the work</h2>
-      <div className="about-content">
+      <div className="about-body">
+        <img
+          src={profilePic}
+          alt="Nick Alexander"
+          className="about-profile-pic"
+        />
+        <div className="about-content">
         <p>
           I'm an abstract artist with strong roots in graffiti and a unique
           perspective shaped by my experiences in both the urban and natural
@@ -34,6 +42,7 @@ export function AboutSection() {
           the decayed, and the forgotten, offering a unique, introspective look
           at the spaces where the urban and natural worlds converge.
         </p>
+        </div>
       </div>
     </section>
   );
