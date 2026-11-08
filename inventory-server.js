@@ -105,7 +105,11 @@ const server = http.createServer((req, res) => {
   let urlPath = req.url.split("?")[0];
   if (urlPath === "/") urlPath = "/inventory.html";
 
-  const filePath = path.join(__dirname, urlPath);
+  // Images now live in public/images
+  const baseDir = urlPath.startsWith("/images/")
+    ? path.join(__dirname, "public")
+    : __dirname;
+  const filePath = path.join(baseDir, urlPath);
 
   fs.readFile(filePath, (err, data) => {
     if (err) {

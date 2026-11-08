@@ -1,4 +1,4 @@
-import profilePic from "../../images/profile-pic-nick.png";
+import profilePic from "../../public/images/profile-pic-nick.png";
 
 export function AboutSection() {
   return (
