@@ -15,27 +15,14 @@ export function HeroSection() {
           transition={{ duration: 0.8 }}
           className="hero-copy"
         >
-          <div className="hero-eyebrow">
-            <span className="hero-artist-name">Nick Alexander</span>
-            <span className="hero-eyebrow-divider" />
-            <span className="hero-commission-tag">Available for commissions</span>
-          </div>
-
           <div className="hero-title-wrap">
             <span className="hero-na-watermark" aria-hidden="true">NA</span>
-            <h1 className="hero-title">
-              <span className="hero-title-line hero-title-bright">Artwork</span>
-              <span className="hero-title-line hero-title-muted">with texture,</span>
-              <span className="hero-title-line hero-title-bright">feeling, and</span>
-              <span className="hero-title-line hero-title-bright">
-                beautiful <span className="hero-title-underline">chaos.</span>
-              </span>
-            </h1>
+            <h1 className="hero-title">Nick Alexander</h1>
           </div>
 
           <p className="hero-description">
-            Works made from instinct and material — painting, photography, and
-            objects that sit between the familiar and the strange.
+            Abstract and typographic landscapes inspired by overlooked and
+            forgotten places
           </p>
 
           <div className="button-row button-row--stacked">

@@ -96,7 +96,6 @@ export function GallerySection() {
                         <span className="card-category">{art.category}</span>
                       </div>
                     </div>
-                    <p className="card-description">{art.description}</p>
                   </CardContent>
                 </Card>
               </Link>

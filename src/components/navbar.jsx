@@ -26,6 +26,7 @@ export function Navbar() {
     <nav className="navbar">
       <div className="nav-brand">
         <img src="/images/na-logo-black.webp" alt="NA logo" className="nav-logo" />
+        <span className="hero-commission-tag">Available for commissions</span>
       </div>
       <div className="nav-links">
         <a href="#work">Work</a>
