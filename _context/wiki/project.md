@@ -51,8 +51,9 @@ nick-alexander/
 │   ├── components/           # React components (gallery, hero, about, contact, etc.)
 │   └── data/
 │       └── artworks.js       # Single source of truth for all artwork data
-├── public/                   # Public assets served directly
-├── images/                   # Artwork images (gallery-1 to gallery-5 are show photos, not for sale)
+├── public/                   # Copied as-is into the built site
+│   ├── images/               # Artwork images (gallery-1 to gallery-5 are show photos, not for sale)
+│   └── _redirects            # Netlify rule so artwork page links work (see deployment.md)
 ├── IMAGES_ROUGH/             # Raw/unprocessed image source files
 ├── inventory.html            # Private inventory management UI
 ├── inventory-server.js       # Local Node server — serves inventory and writes artworks.js
@@ -114,7 +115,7 @@ Then open **http://localhost:3001** in a browser.
 **Notes:**
 - The server only needs to be running while actively using the inventory
 - Vite dev server (`npm run dev`) runs separately on port 5173 and is unaffected
-- `gallery-1.webp` through `gallery-5.webp` in `images/` are art show photos, not inventory items
+- `gallery-1.webp` through `gallery-5.webp` in `public/images/` are art show photos, not inventory items
 - Nick and Michelle both need the repo cloned locally to use the inventory; GitHub Desktop is recommended for non-terminal Git workflow
 
 ## Design system
