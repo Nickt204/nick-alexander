@@ -494,6 +494,7 @@
         <select id="form-category">
           <option value="">— select —</option>
           <option>Painting</option>
+          <option>Print</option>
           <option>Digital</option>
           <option>Mixed Media</option>
           <option>Drawing</option>
@@ -732,8 +733,12 @@
     } catch { return defaultArtworks; }
   }
 
+  // "Dirty" = edits in this browser that haven't been written to artworks.js yet
+  const DIRTY_KEY = STORAGE_KEY + '-dirty';
+
   function saveData(artworks) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(artworks));
+    localStorage.setItem(DIRTY_KEY, '1');
   }
 
   let artworks = loadData();
@@ -939,6 +944,7 @@
       });
       const data = await res.json();
       if (data.ok) {
+        localStorage.removeItem(DIRTY_KEY);
         status.textContent = '✓ Saved to artworks.js';
         status.className = 'save-status visible';
         setTimeout(() => { status.className = 'save-status'; }, 3000);
@@ -958,7 +964,21 @@
   });
 
   // ── INIT ─────────────────────────────────────────────────────────────────────
-  render();
+  // artworks.js is the source of truth. Load it unless there are unsaved edits here.
+  async function init() {
+    if (localStorage.getItem(DIRTY_KEY) !== '1') {
+      try {
+        const res = await fetch('http://localhost:3001/api/artworks');
+        if (res.ok) {
+          artworks = await res.json();
+          nextId = Math.max(0, ...artworks.map(a => a.id)) + 1;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(artworks));
+        }
+      } catch { /* server not running — keep the local copy */ }
+    }
+    render();
+  }
+  init();
 </script>
 
 </body>
