@@ -16,13 +16,25 @@ export function HeroSection() {
           className="hero-copy"
         >
           <div className="hero-title-wrap">
-            <span className="hero-na-watermark" aria-hidden="true">NA</span>
-            <h1 className="hero-title">Nick Alexander</h1>
+            <div className="hero-logo-wrap">
+              <img
+                src="/images/na-logo-black.webp"
+                alt=""
+                className="hero-logo"
+              />
+            </div>
+            <h1 className="hero-title">
+              <span>Accidental landscapes</span>
+              <span>Inspired by fragments</span>
+              <span>of the forgotten.</span>
+            </h1>
           </div>
 
           <p className="hero-description">
-            Abstract and typographic landscapes inspired by overlooked and
-            forgotten places
+            Abstract and typographic landscapes inspired by the overlooked and
+            unsung corners of our world, giving forgotten surfaces, accidental
+            marks and unnoticed details a chance to shine, and finding beauty,
+            hope and optimism in the things we might otherwise pass by.
           </p>
 
           <div className="button-row button-row--stacked">

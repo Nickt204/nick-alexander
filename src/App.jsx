@@ -6,6 +6,7 @@ import { AboutSection } from "./components/about-section";
 import { ContactSection } from "./components/contact-section";
 import { SiteFooter } from "./components/site-footer";
 import { ArtworkPage } from "./components/artwork-page";
+import { ExhibitionsPage } from "./components/exhibitions-page";
 
 function HomePage() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/artwork/:slug" element={<ArtworkPage />} />
+        <Route path="/exhibitions" element={<ExhibitionsPage />} />
       </Routes>
     </BrowserRouter>
   );
