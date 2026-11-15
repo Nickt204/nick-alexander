@@ -50,7 +50,8 @@ nick-alexander/
 │   ├── assets/               # Static assets (hero image, SVGs)
 │   ├── components/           # React components (gallery, hero, about, contact, etc.)
 │   └── data/
-│       └── artworks.js       # Single source of truth for all artwork data
+│       ├── artworks.js       # Single source of truth for all artwork data
+│       └── exhibitions.js    # Single source of truth for the Exhibitions page
 ├── public/                   # Copied as-is into the built site
 │   ├── images/               # Artwork images (gallery-1 to gallery-5 are show photos, not for sale)
 │   └── _redirects            # Netlify rule so artwork page links work (see deployment.md)
@@ -65,10 +66,23 @@ nick-alexander/
 
 | Section | Description |
 |---|---|
-| **Hero** | Full-width intro with animated headline, tagline, featured artwork card, and two CTAs |
+| **Hero** | Black panel with the white NA logo and a large, tight three-line headline ("Accidental landscapes / Inspired by fragments / of the forgotten."), a longer description, featured artwork card (Utopia), and two CTAs |
 | **Gallery** | Filterable, searchable grid of artwork cards (category + text search) |
 | **About** | Short artist bio section |
 | **Contact** | CTA section with email and Instagram links |
+
+## Other pages
+
+| Page | Address | Description |
+|---|---|---|
+| **Artwork detail** | `/artwork/:slug` | One page per artwork (`artwork-page.jsx`) |
+| **Exhibitions** | `/exhibitions` | Every exhibition Nick has been in, grouped by year, newest first (`exhibitions-page.jsx`) |
+
+The navbar and footer both link to Exhibitions. Their Work / About / Contact links use `/#work` style addresses so they also work from pages other than the home page.
+
+## Exhibitions data
+
+Exhibitions live in `src/data/exhibitions.js` — add an entry to the list and the page updates itself (sorted and grouped by year automatically). Each entry has: `title`, `type`, `venue`, `location`, `year`. Use the exact type `Solo Exhibition` for solo shows — they get an amber highlight on the page. Everything else (e.g. `Group Exhibition`) shows in grey.
 
 ## Known artwork (current)
 
@@ -123,14 +137,20 @@ Then open **http://localhost:3001** in a browser.
 The site uses a dark theme throughout (`#070707` background). Key CSS variables are in `src/index.css`. Notable design tokens in use:
 
 - **Accent colour:** Amber/yellow (`#fbbf24`) used for section labels
-- **Typography:** Inter, system-ui fallback chain
+- **Typography:** Inter, system-ui fallback chain for body text. The hero headline uses `--display` (Helvetica Neue / Helvetica / Arial) from `src/index.css`, set tight and bold. No font files are bundled — if a specific typeface is wanted later, it would need adding.
 - **Cards:** Rounded (28px), dark (`#0f0f0f`), subtle border, hover lift + image scale
 - **Buttons:** Pill-shaped (999px radius), primary = white/black, outline = transparent
+
+## Phones and small screens
+
+Desktop spacing (48px side gaps) is too wide on a phone, so `src/App.css` has one block near the end — `@media (max-width: 767px)`, under the comment "Phone-width spacing" — that cuts the gaps to about 20px, resizes the hero headline, and lets the footer links wrap. The About section has its own small phone block next to its styles. When adding a new section with side padding or margin, add it to that phone block too.
+
+To check on a phone size without a phone: run `npm run build`, then `npm run preview`, and open the page in Chrome with Developer Tools device mode set to about 390px wide. The page should never scroll sideways. A quick check on a real phone is still worthwhile.
 
 ## Areas likely to grow
 
 - More artwork added to the gallery over time
 - Blog or process/insights section (Nick's creative process, studio notes)
-- Exhibitions and news section
+- More exhibitions (add to `exhibitions.js`) and a news section
 - Potential e-commerce or print-on-demand integration
 - Social links (Instagram is referenced but not yet linked)

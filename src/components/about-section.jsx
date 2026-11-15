@@ -13,34 +13,24 @@ export function AboutSection() {
         />
         <div className="about-content">
         <p>
-          I'm an abstract artist with strong roots in graffiti and a unique
-          perspective shaped by my experiences in both the urban and natural
-          worlds. I create paintings that explore the delicate interplay between
-          urban decay and nature's reclaiming force.
+          Nick Alexander is an abstract artist with roots in graffiti, whose
+          work explores the relationship between urban decay and the natural
+          world. Drawing inspiration from neglected cityscapes, weathered
+          surfaces and forgotten spaces, his paintings reveal beauty in the
+          overlooked and unexpected.
         </p>
         <p>
-          Influenced by neglected cityscapes, crumbling walls, and the vibrant
-          textures of forgotten spaces, I create visually dynamic works that
-          evoke the feeling of nature overtaking abandoned environments. My
-          paintings are a fusion of organic patterns, fragmented forms, and
-          layered colours that mirror the organic growth found in places left
-          untended, where weeds push through cracks in concrete, and rust and
-          decay transform into new forms of beauty.
+          Combining layered colours, fragmented forms and rich textures,
+          Alexander creates dynamic compositions that reflect the interplay
+          between man-made environments and nature’s persistent ability to
+          reclaim them. Rust, erosion, peeling posters and the accidental marks
+          left by time become sources of inspiration, transforming elements of
+          decay into something vibrant and compelling.
         </p>
         <p>
-          Through my art, I reflect on the resilience of nature, inviting
-          viewers to consider how urban spaces, though deteriorating, can give
-          birth to new, unexpected life. My abstract style captures the raw,
-          untamed beauty of this transformation, bridging the manmade and the
-          natural, and creating works that are both a commentary on urban
-          decline and a celebration of nature's ability to reclaim.
-        </p>
-        <p>
-          Each piece I create is an exploration of texture, colour, and form,
-          evoking both the chaos of the city and the serenity found in the
-          wilderness. My work invites viewers to see beauty in the overlooked,
-          the decayed, and the forgotten, offering a unique, introspective look
-          at the spaces where the urban and natural worlds converge.
+          His work celebrates the beauty of imperfection and the unexpected,
+          inviting viewers to reconsider familiar environments and discover a
+          sense of hope, renewal and optimism in places often overlooked.
         </p>
         </div>
       </div>

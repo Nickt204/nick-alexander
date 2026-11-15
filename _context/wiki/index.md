@@ -7,7 +7,7 @@ Start here, then follow links only when relevant to the task at hand.
 
 | File | What it covers |
 |---|---|
-| [project.md](./project.md) | What the project is, goals, audience, key modules, and known artwork |
+| [project.md](./project.md) | What the project is, goals, audience, key modules, pages (incl. Exhibitions), phone/small-screen styling, and known artwork |
 | [preferences.md](./preferences.md) | Working standards, conventions, and how to collaborate effectively |
 | [deployment.md](./deployment.md) | Hosting setup (GitHub, Netlify, GoDaddy), public repo note, and how changes go live |
 

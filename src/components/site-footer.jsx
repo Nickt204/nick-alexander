@@ -1,12 +1,15 @@
+import { Link } from "react-router-dom";
+
 export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="footer-inner">
         <p className="footer-brand">Nick Alexander Studio</p>
         <nav className="footer-nav">
-          <a href="#work">Work</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="/#work">Work</a>
+          <a href="/#about">About</a>
+          <Link to="/exhibitions">Exhibitions</Link>
+          <a href="/#contact">Contact</a>
         </nav>
         <div className="footer-links">
           <a href="mailto:nickalexanderstudio@gmail.com">nickalexanderstudio@gmail.com</a>
