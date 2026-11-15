@@ -135,6 +135,14 @@ Then open **http://localhost:3001** in a browser.
 - Nothing syncs from Big Cartel. Adding a painting there does not change the website.
 - Hand edits to `artworks.js` for fields the inventory manages (title, year, medium, category, image, description, price, location, sold) are overwritten on the next save. `slug` and `buyUrl` are preserved.
 
+**If artwork pages break after an inventory save:**
+- Symptom: clicking a piece in the gallery goes to `/artwork/undefined` or shows a blank page. Cause: `artworks.js` lost its `slug` and `buyUrl` fields (and the `STORE` line). This happened once when a save was made from an out-of-date copy of the inventory tool.
+- Prevention: **run `git pull` before starting `npm run inventory`**, and check `git diff src/data/artworks.js` before committing. Every entry should still have a `slug`, and the file should still start with `const STORE = ...`.
+- Fix: put `slug` back on each entry (lowercase title, spaces to hyphens), re-add `const STORE = "https://nickalexander.bigcartel.com/product";`, and re-add a `buyUrl` line, in the same style as the other entries, where the piece is on Big Cartel. The last good copy can be recovered with `git show <earlier-commit>:src/data/artworks.js`.
+- Also check image paths start with `/images/` (not `images/` or `/public/images/`). A path without the leading `/` breaks on artwork pages. A piece with `image: ""` shows no picture, so save the file into `public/images/` and point to it.
+- The Buy link needs the **public** Big Cartel URL (`nickalexander.bigcartel.com/product/<slug>`), not the admin link from `my.bigcartel.com`.
+- Prices on the site should match Big Cartel, which is treated as correct.
+
 **Notes:**
 - The server only needs to be running while actively using the inventory
 - Vite dev server (`npm run dev`) runs separately on port 5173 and is unaffected
