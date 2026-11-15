@@ -175,7 +175,7 @@ export const artworks = [
     year: "2023",
     medium: "UV print on aluminium panel",
     category: "Print",
-    image: "",
+    image: "/images/memory-sequence.jpg",
     description: "60 cm × 60 cm (framed).",
     price: 120,
     buyUrl: `${STORE}/memory-sequence`,
@@ -190,6 +190,7 @@ export const artworks = [
     image: "/images/gnostic-gateway-1.webp",
     description: "",
     price: 750,
+    buyUrl: `${STORE}/gnostic-gateway`,
     location: "South hill park",
   },
 ];
