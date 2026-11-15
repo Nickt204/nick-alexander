@@ -110,8 +110,8 @@ A private artwork inventory tool for Nick and Michelle to manage the catalogue.
 | File | Purpose |
 |---|---|
 | `inventory.html` | Inventory UI — thumbnails, title, year, medium, category, location, price, status, notes |
-| `inventory-server.js` | Local Node.js server — serves the inventory app and writes saves directly to `artworks.js` |
-| `src/data/artworks.js` | Written to on every save — website gallery updates automatically |
+| `inventory-server.js` | Local Node.js server — serves the inventory app, reads `artworks.js` on load, and writes saves back to it |
+| `src/data/artworks.js` | Source of truth. Written to on every save. The live site only updates after the change is committed and pushed to `main` |
 
 **To run:**
 ```
@@ -125,6 +125,15 @@ Then open **http://localhost:3001** in a browser.
 3. Click **⬆ Save to artworks.js** — writes directly to `src/data/artworks.js`
 4. Commit and push — `git add src/data/artworks.js && git commit -m "Update inventory" && git push`
 5. Other person runs `git pull` to get the latest
+
+**How saving works:**
+- On load, the inventory fetches the current `artworks.js` from the server (`/api/artworks`). If the server isn't running it falls back to the copy saved in the browser (or a stale built-in list in `inventory.html`, so always start the server first).
+- Unsaved edits are kept in the browser and are not replaced on reload until you click Save.
+- Saving rewrites the whole of `artworks.js`. The server keeps each piece's `slug` and `buyUrl` by matching on **title**, and keeps the `STORE` constant. A new piece gets a `slug` generated from its title.
+- **Renaming a piece** gives it a new slug and drops its `buyUrl`, which breaks its old artwork page link.
+- **New pieces have no Buy button.** After saving, add a `buyUrl` line to the new entry in `artworks.js` by hand, in the same style as the other entries, using the Big Cartel product slug.
+- Nothing syncs from Big Cartel. Adding a painting there does not change the website.
+- Hand edits to `artworks.js` for fields the inventory manages (title, year, medium, category, image, description, price, location, sold) are overwritten on the next save. `slug` and `buyUrl` are preserved.
 
 **Notes:**
 - The server only needs to be running while actively using the inventory
